@@ -8,9 +8,10 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 
   const url = `https://cms.faculdadebetania.com.br/api/blogs?${searchParams.toString()}`;
 
-  const response = await fetch(url, { cache: "force-cache" }).then((res) =>
-    res.json()
-  );
+  const response = await fetch(url, {
+    cache: "force-cache",
+    next: { tags: ["post"] },
+  }).then((res) => res.json());
   const data = response.data as Array<Post> | undefined;
   return Array.isArray(data) ? data[0] : undefined;
 }
@@ -47,9 +48,10 @@ export async function getPosts(
     );
 
   const url = `https://cms.faculdadebetania.com.br/api/blogs?${searchParams.toString()}`;
-  const response = await fetch(url, { cache: "force-cache" }).then((res) =>
-    res.json()
-  );
+  const response = await fetch(url, {
+    cache: "force-cache",
+    next: { tags: ["posts"] },
+  }).then((res) => res.json());
   const data = response.data as Array<Post>;
   const count = response.meta.pagination.total;
   return { count, data };
