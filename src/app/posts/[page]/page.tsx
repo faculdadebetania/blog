@@ -33,7 +33,7 @@ export default async function Home({ params: { page = "1" } }: Props) {
   return (
     <main className="container space-y-16">
       <Link
-        href={`/posts/${lastPost.slug}`}
+        href={`/post/${lastPost.slug}`}
         className="flex flex-col gap-8 h-[768px] border-gray/50 border-[1px] rounded-2xl p-8 hover:border-black/25 transition-colors md:flex-row md:h-96"
       >
         <img
