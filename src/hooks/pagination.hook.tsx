@@ -69,7 +69,7 @@ export default function usePagination(props: Props) {
         <PaginationContent>
           {page > 1 && (
             <PaginationItem>
-              <PaginationLink href={{ query: { page: page - 1 } }}>
+              <PaginationLink href={`/posts/${page - 1}`}>
                 <Icon name="ChevronLeft" className="h-4 w-4" />
               </PaginationLink>
             </PaginationItem>
@@ -78,7 +78,7 @@ export default function usePagination(props: Props) {
           {first.isVisible && (
             <PaginationItem>
               <PaginationLink
-                href={{ query: { page: first.index } }}
+                href={`/posts/${first.index}`}
                 isActive={first.isActive}
               >
                 {first.index}
@@ -95,7 +95,7 @@ export default function usePagination(props: Props) {
           {midLeft.isVisible && (
             <PaginationItem>
               <PaginationLink
-                href={{ query: { page: midLeft.index } }}
+                href={`/posts/${midLeft.index}`}
                 isActive={midLeft.isActive}
               >
                 {midLeft.index}
@@ -106,7 +106,7 @@ export default function usePagination(props: Props) {
           {mid.isVisible && (
             <PaginationItem>
               <PaginationLink
-                href={{ query: { page: mid.index } }}
+                href={`/posts/${mid.index}`}
                 isActive={mid.isActive}
               >
                 {mid.index}
@@ -117,7 +117,7 @@ export default function usePagination(props: Props) {
           {midRight.isVisible && (
             <PaginationItem>
               <PaginationLink
-                href={{ query: { page: midRight.index } }}
+                href={`/posts/${midRight.index}`}
                 isActive={midRight.isActive}
               >
                 {midRight.index}
@@ -134,7 +134,7 @@ export default function usePagination(props: Props) {
           {last.isVisible && (
             <PaginationItem>
               <PaginationLink
-                href={{ query: { page: last.index } }}
+                href={`/posts/${last.index}`}
                 isActive={last.isActive}
               >
                 {last.index}
@@ -144,7 +144,7 @@ export default function usePagination(props: Props) {
 
           {page < pages && (
             <PaginationItem>
-              <PaginationLink href={{ query: { page: page + 1 } }}>
+              <PaginationLink href={`/posts/${page + 1}`}>
                 <Icon name="ChevronRight" className="h-4 w-4" />
               </PaginationLink>
             </PaginationItem>

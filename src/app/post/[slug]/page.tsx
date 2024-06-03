@@ -14,6 +14,12 @@ interface Props {
   params: { slug: string };
 }
 
+export async function generateStaticParams() {
+  const { count } = await getPosts({ page: 0, pageSize: 0 });
+  const posts = await getPosts({ page: 1, pageSize: count });
+  return posts.data.map(({ slug }) => ({ slug }));
+}
+
 export async function generateMetadata({
   params: { slug },
 }: Props): Promise<Metadata> {
@@ -36,7 +42,7 @@ export default async function Page({ params: { slug } }: Props) {
     filter: { field: "slug", operator: "$ne", value: slug },
   });
 
-  const imageURL = post.cover.formats.small.url;
+  const imageURL = post.cover?.formats?.small?.url;
 
   return (
     <main className="container">
