@@ -9,7 +9,7 @@ interface Props {
 export default function PostCard({ post }: Props) {
   return (
     <Link
-      href={`/posts/${post.slug}`}
+      href={`/post/${post.slug}`}
       key={post.id}
       className="space-y-4 border-gray/50 border-[1px] rounded-2xl p-4 hover:border-black/25 transition-colors"
     >
