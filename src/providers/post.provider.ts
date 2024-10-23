@@ -10,7 +10,7 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 
   const response = await fetch(url, {
     cache: "force-cache",
-    next: { tags: ["post"] },
+    next: { tags: ["posts"] },
   }).then((res) => res.json());
   const data = response.data as Array<Post> | undefined;
   return Array.isArray(data) ? data[0] : undefined;
@@ -26,9 +26,7 @@ interface Params {
     value: string;
   };
 }
-export async function getPosts(
-  params?: Params
-): Promise<{ count: number; data: Array<Post> }> {
+export async function getPosts(params?: Params): Promise<{ count: number; data: Array<Post> }> {
   const page = params?.page ?? 1;
   const pageSize = params?.pageSize ?? 10;
   const sort = params?.sort ?? "date:desc";
@@ -41,11 +39,7 @@ export async function getPosts(
     populate: "*",
   });
 
-  if (filter)
-    searchParams.append(
-      `filters[${filter.field}][${filter.operator}]`,
-      filter.value
-    );
+  if (filter) searchParams.append(`filters[${filter.field}][${filter.operator}]`, filter.value);
 
   const url = `https://cms.faculdadebetania.com.br/api/blogs?${searchParams.toString()}`;
   const response = await fetch(url, {
