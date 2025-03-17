@@ -46,7 +46,7 @@ export default async function Page(props: Props) {
 
   const data = await getRandomPosts(slug);
 
-  const imageUrl = post.cover.formats.small?.url ?? post.cover.formats.medium?.url ?? post.cover.url;
+  const imageUrl = post.cover.formats.large?.url ?? post.cover.formats.medium?.url ?? post.cover.url;
 
   const readingTime = Math.ceil(post.body.trim().split(/\s+/).length / 200);
 
