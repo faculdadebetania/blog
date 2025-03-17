@@ -27,28 +27,28 @@ export function NavDesktop() {
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
+            <Link href="https://faculdadebetania.com.br/" legacyBehavior passHref>
               <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-inherit h-auto")}>
                 INÍCIO
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/#cursos" legacyBehavior passHref>
+            <Link href="https://faculdadebetania.com.br/#cursos" legacyBehavior passHref>
               <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-inherit h-auto")}>
                 CURSOS
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/vestibular" legacyBehavior passHref>
+            <Link href="https://faculdadebetania.com.br/vestibular" legacyBehavior passHref>
               <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-inherit h-auto")}>
                 VESTIBULAR
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/republica-estudantil" legacyBehavior passHref>
+            <Link href="https://faculdadebetania.com.br/republica-estudantil" legacyBehavior passHref>
               <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-inherit h-auto")}>
                 REPÚBLICA ESTUDANTIL
               </NavigationMenuLink>
@@ -68,25 +68,37 @@ export function NavDesktop() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-primary/95 border-white/25" onMouseLeave={() => setOpen(false)}>
                 <DropdownMenuItem className="opacity-90 group">
-                  <Link href="/corpo-docente" className="flex items-center gap-2 w-full group-hover:text-neutral-300">
+                  <Link
+                    href="https://faculdadebetania.com.br/corpo-docente"
+                    className="flex items-center gap-2 w-full group-hover:text-neutral-300"
+                  >
                     <Icon name="UsersRound" strokeWidth={1} /> Corpo Docente
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-neutral-700 mx-2" />
                 <DropdownMenuItem className="opacity-90 group">
-                  <Link href="/documentos" className="flex items-center justify gap-2 w-full group-hover:text-neutral-300">
+                  <Link
+                    href="https://faculdadebetania.com.br/documentos"
+                    className="flex items-center justify gap-2 w-full group-hover:text-neutral-300"
+                  >
                     <Icon name="Files" strokeWidth={1} /> Documentos
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-neutral-700 mx-2" />
                 <DropdownMenuItem className="opacity-90 group">
-                  <Link href="/ouvidoria" className="flex items-center gap-2 w-full group-hover:text-neutral-300">
+                  <Link
+                    href="https://faculdadebetania.com.br/ouvidoria"
+                    className="flex items-center gap-2 w-full group-hover:text-neutral-300"
+                  >
                     <Icon name="MessagesSquare" strokeWidth={1} /> Ouvidoria
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-neutral-700 mx-2" />
                 <DropdownMenuItem className="opacity-90 group">
-                  <Link href="/diplomas" className="flex items-center gap-2 w-full group-hover:text-neutral-300">
+                  <Link
+                    href="https://faculdadebetania.com.br/diplomas"
+                    className="flex items-center gap-2 w-full group-hover:text-neutral-300"
+                  >
                     <Icon name="GraduationCap" strokeWidth={1} /> Diplomas
                   </Link>
                 </DropdownMenuItem>

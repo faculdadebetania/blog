@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="container text-white !pb-0 bg-primary">
       <section className="grid gap-8 md:gap-16 lg:gap-24 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <div className="flex flex-col gap-4">
-          <Link href="/" className="relative">
+          <Link href="https://faculdadebetania.com.br/" className="relative">
             <Image
               priority
               height={96}
@@ -37,19 +37,21 @@ export default function Footer() {
           <h3 className="font-bold uppercase">CURSOS</h3>
           <ul className="flex flex-col gap-1">
             <li>
-              <Link href="/cursos/teologia">Teologia</Link>
+              <Link href="https://faculdadebetania.com.br/cursos/teologia">Teologia</Link>
             </li>
             <li>
-              <Link href="/cursos/aconselhamento-e-gestao-de-pessoas">Aconselhamento e Gestão de Pessoas</Link>
+              <Link href="https://faculdadebetania.com.br/cursos/aconselhamento-e-gestao-de-pessoas">
+                Aconselhamento e Gestão de Pessoas
+              </Link>
             </li>
             <li>
-              <Link href="/cursos/capelania">Capelania</Link>
+              <Link href="https://faculdadebetania.com.br/cursos/capelania">Capelania</Link>
             </li>
             <li>
-              <Link href="/cursos/comunicacao-que-transforma">Comunicação que transforma</Link>
+              <Link href="https://faculdadebetania.com.br/cursos/comunicacao-que-transforma">Comunicação que transforma</Link>
             </li>
             <li>
-              <Link href="cursos/biblia-e-teologia">Bíblia e Teologia</Link>
+              <Link href="https://faculdadebetania.com.brcursos/biblia-e-teologia">Bíblia e Teologia</Link>
             </li>
           </ul>
         </section>
@@ -57,19 +59,19 @@ export default function Footer() {
           <h3 className="font-bold uppercase">INSTITUIÇÃO</h3>
           <ul className="flex flex-col gap-1">
             <li>
-              <Link href="/a-faculdade">A Faculdade</Link>
+              <Link href="https://faculdadebetania.com.br/a-faculdade">A Faculdade</Link>
             </li>
             <li>
-              <Link href="/corpo-docente">Corpo Docente</Link>
+              <Link href="https://faculdadebetania.com.br/corpo-docente">Corpo Docente</Link>
             </li>
             <li>
-              <Link href="/vestibular">Vestibular</Link>
+              <Link href="https://faculdadebetania.com.br/vestibular">Vestibular</Link>
             </li>
             <li>
-              <Link href="/republica-estudantil">República Estudantil</Link>
+              <Link href="https://faculdadebetania.com.br/republica-estudantil">República Estudantil</Link>
             </li>
             <li>
-              <Link href="/contato">Contato</Link>
+              <Link href="https://faculdadebetania.com.br/contato">Contato</Link>
             </li>
           </ul>
         </section>
