@@ -1,9 +1,9 @@
+import VLibras from "@components/vlibras";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Footer from "../components/layout/footer";
+import Header from "../components/layout/header";
 import "./globals.scss";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import VLibras from "@components/vlibras";
 
 const inter = Inter({ subsets: ["latin"] });
 

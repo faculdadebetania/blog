@@ -1,28 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import PostCard from "@app/components/post-card";
+import { Avatar } from "@components/ui/avatar";
 import { Button } from "@components/ui/button";
 import Icon from "@components/ui/icon";
 import { Separator } from "@components/ui/separator";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
-import { Post } from "src/models/post.model";
-import { getPost, getPosts } from "src/providers/post.provider";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import { getPost, getPostsSlugs, getRandomPosts } from "src/providers/post.provider";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const { count } = await getPosts({ page: 0, pageSize: 0 });
-  const posts = await getPosts({ page: 1, pageSize: count });
-  return posts.data.map(({ slug }) => ({ slug }));
+  const response = await getPostsSlugs();
+  const slugs = response.map((slug) => ({ slug }));
+  return slugs;
 }
 
-export async function generateMetadata({
-  params: { slug },
-}: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+
+  const { slug } = params;
+
   const post = await getPost(slug);
   if (!post) return {};
   return {
@@ -32,47 +36,69 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params: { slug } }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
+
+  const { slug } = params;
+
   const post = await getPost(slug);
   if (!post) notFound();
 
-  const { data } = await getPosts({
-    page: 1,
-    pageSize: 3,
-    filter: { field: "slug", operator: "$ne", value: slug },
-  });
+  const data = await getRandomPosts(slug);
 
-  const imageURL = post.cover?.formats?.small?.url;
+  const imageUrl = post.cover.formats.small?.url ?? post.cover.formats.medium?.url ?? post.cover.url;
+
+  const readingTime = Math.ceil(post.body.trim().split(/\s+/).length / 200);
+
+  const avatar = post.author.photo?.formats?.small?.url ?? post.author.photo?.url ?? null;
+
+  console.log(post.author);
 
   return (
-    <main className="container">
-      {imageURL && (
-        <img
-          src={post.cover.formats.small.url}
-          alt={post.cover.alternativeText}
-          className="object-cover rounded-lg w-full h-full md:w-1/2 lg:w-1/3 md:float-left md:mr-4 md:mb-4"
-        />
-      )}
-      <p className="text-gray-600 text-sm mt-4 md:mt-0">
-        {new Date(post.date).toLocaleDateString("pt-BR", {
-          dateStyle: "long",
-        })}
-        &nbsp;-&nbsp;{post.author.name}
-      </p>
-      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-      <Markdown className="text-justify">{post.body}</Markdown>
-      <Separator className="my-8 bg-gray-300" />
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
-        {data.map((post) => (
-          <PostCard {...{ post }} key={post.id} />
-        ))}
-      </section>
-      <Button variant="link" asChild className="gray-500 font-light text-lg">
-        <Link href="/">
-          <Icon name="MoveLeft" />
-          &nbsp;Voltar ao início
-        </Link>
-      </Button>
+    <main className="container max-w-screen-xl mx-auto p-4">
+      <h1 className="text-6xl font-bold mb-4">{post.title}</h1>
+      <div className="text-gray-400 flex items-center -mb-2 -mt-4">
+        <Avatar name={post.author.name} photo={avatar} />
+        &nbsp;-&nbsp;
+        <h1 className="font-light text-sm">
+          {new Date(post.date).toLocaleDateString("pt-BR", {
+            dateStyle: "long",
+          })}
+          &nbsp;&#8226;&nbsp;{readingTime} min. de leitura
+        </h1>
+      </div>
+      <div className="flex flex-col gap-6 items-start">
+        {imageUrl && (
+          <div className="w-full flex-shrink-0">
+            <img
+              src={imageUrl}
+              alt={post.cover.alternativeText ?? "post"}
+              className="object-cover rounded-lg w-full h-auto shadow-md"
+            />
+          </div>
+        )}
+        <div className="w-full">
+          <Markdown className="text-justify prose min-w-full" rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
+            {post.body}
+          </Markdown>
+          <div className="text-gray-400 flex flex-col text-sm">
+            <Avatar name={post.author.name} photo={avatar} />
+            <div>{post.author.description}</div>
+          </div>
+          <Separator className="my-8 bg-gray-300" />
+          <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
+            {data.map((post) => (
+              <PostCard {...{ post }} key={post.id} />
+            ))}
+          </section>
+          <Button variant="link" asChild className="gray-500 font-light">
+            <Link href="/">
+              <Icon name="MoveLeft" strokeWidth={1} />
+              &nbsp;Voltar ao início
+            </Link>
+          </Button>
+        </div>
+      </div>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button } from "@components/ui/button";
+import { Avatar } from "@components/ui/avatar";
 import Link from "next/link";
 import { Post } from "src/models/post.model";
 
@@ -7,27 +7,28 @@ interface Props {
   post: Post;
 }
 export default function PostCard({ post }: Props) {
+  const readingTime = Math.ceil(post.body.trim().split(/\s+/).length / 200);
+  const avatar = post.author.photo?.formats?.small?.url ?? post.author.photo?.url ?? null;
   return (
     <Link
       href={`/post/${post.slug}`}
       key={post.id}
-      className="space-y-4 border-gray/50 border-[1px] rounded-2xl p-4 hover:border-black/25 transition-colors"
+      className="group space-y-2 rounded-2xl hover:border-black/25 transition-colors"
     >
-      <h1 className="text-gray-600 text-sm">
+      <img
+        src={post.cover.formats.small?.url || "/imagens/placeholder.png"}
+        alt={post.cover.alternativeText ?? "placeholder"}
+        className="rounded-lg w-full h-64 object-cover group-hover:opacity-50 transition-opacity duration-300"
+      />
+      <h1 className="text-gray-400 text-sm">
         {new Date(post.date).toLocaleDateString("pt-BR", {
           dateStyle: "long",
         })}
-        &nbsp;-&nbsp;{post.author.name}
+        &nbsp;&#8226;&nbsp;{readingTime} min. de leitura
       </h1>
-      <img
-        src={post.cover.formats.small?.url || "/imagens/placeholder.png"}
-        alt={post.cover.alternativeText}
-        className="rounded-lg w-full h-64 object-cover"
-      />
-      <div className="flex justify-between gap-8 items-start">
-        <h1 className="font-semibold text-lg">{post.title}</h1>
-        <Button>Ler mais</Button>
-      </div>
+      <h1 className="font-semibold text-lg group-hover:underline transition-all duration-300">{post.title}</h1>
+      <p className="text-ellipsis w-full line-clamp-2 text-gray-500 text-sm">{post.body}</p>
+      <Avatar name={post.author.name} photo={avatar} />
     </Link>
   );
 }

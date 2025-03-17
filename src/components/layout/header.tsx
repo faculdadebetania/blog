@@ -1,12 +1,12 @@
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { NavDesktop } from "./nav";
+import { NavDesktop } from "./nav-desktop";
+import NavMobile from "./nav-mobile";
 
 export default function Header() {
   return (
     <header className="container flex justify-between items-center h-32 !py-8">
-      <Link href="/" className="relative w-[196px] h-full">
+      <Link href="/" className="relative w-[160px] h-full">
         <Image
           priority
           fill
@@ -18,6 +18,7 @@ export default function Header() {
         />
       </Link>
       <NavDesktop />
+      <NavMobile />
     </header>
   );
 }

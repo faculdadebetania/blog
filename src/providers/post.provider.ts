@@ -1,22 +1,13 @@
-import { Post } from "src/models/post.model";
+import { notFound } from "next/navigation";
+import { Post, Posts } from "src/models/post.model";
+import { PostCountSchema } from "src/schemas/posts/post.count.schema";
+import { PostListSchema } from "src/schemas/posts/post.list.schema";
+import { PostRandomSchema } from "src/schemas/posts/post.random.schema";
+import { PostSchema } from "src/schemas/posts/post.schema";
+import { PostSlugsSchema } from "src/schemas/posts/post.slugs.schema";
+import { fetchCMS } from "./cms.provider";
 
-export async function getPost(slug: string): Promise<Post | undefined> {
-  const searchParams = new URLSearchParams({
-    populate: "*",
-    "filters[slug][$eq]": slug,
-  });
-
-  const url = `https://cms.faculdadebetania.com.br/api/blogs?${searchParams.toString()}`;
-
-  const response = await fetch(url, {
-    cache: "force-cache",
-    next: { tags: ["posts"] },
-  }).then((res) => res.json());
-  const data = response.data as Array<Post> | undefined;
-  return Array.isArray(data) ? data[0] : undefined;
-}
-
-interface Params {
+interface Props {
   page?: number;
   pageSize?: number;
   sort?: string;
@@ -26,27 +17,74 @@ interface Params {
     value: string;
   };
 }
-export async function getPosts(params?: Params): Promise<{ count: number; data: Array<Post> }> {
-  const page = params?.page ?? 1;
-  const pageSize = params?.pageSize ?? 10;
-  const sort = params?.sort ?? "date:desc";
-  const filter = params?.filter;
+export async function getPosts(props?: Props): Promise<Posts> {
+  const page = props?.page ?? 1;
+  const pageSize = props?.pageSize ?? 10;
+  const sort = props?.sort ?? "date:desc";
+  const filter = props?.filter;
 
-  const searchParams = new URLSearchParams({
+  const params: Record<string, string> = {
     "pagination[start]": ((+page - 1) * 10).toString(),
     "pagination[limit]": pageSize.toString(),
+    "populate[cover]": "*",
+    "populate[author][populate]": "*",
     sort: sort,
-    populate: "*",
+  };
+
+  if (filter) params[`filters[${filter.field}][${filter.operator}]`] = filter.value;
+
+  const response = await fetchCMS({
+    uri: "blogs",
+    method: "GET",
+    schema: PostListSchema,
+    params,
   });
 
-  if (filter) searchParams.append(`filters[${filter.field}][${filter.operator}]`, filter.value);
+  if (response.length < 1) notFound();
 
-  const url = `https://cms.faculdadebetania.com.br/api/blogs?${searchParams.toString()}`;
-  const response = await fetch(url, {
-    cache: "force-cache",
-    next: { tags: ["posts"] },
-  }).then((res) => res.json());
-  const data = response.data as Array<Post>;
-  const count = response.meta.pagination.total;
-  return { count, data };
+  return response;
+}
+
+export async function getPost(slug: string): Promise<Post> {
+  const response = await fetchCMS({
+    uri: "blog/post",
+    method: "GET",
+    schema: PostSchema,
+    params: { slug },
+    tag: slug,
+  });
+
+  return response;
+}
+
+export async function getRandomPosts(slug: string): Promise<Posts> {
+  const response = await fetchCMS({
+    uri: "blog/random",
+    method: "GET",
+    schema: PostRandomSchema,
+    params: { slug },
+  });
+
+  return response;
+}
+
+export async function getPostsCount(): Promise<number> {
+  const { count } = await fetchCMS({
+    uri: "blog/count",
+    method: "GET",
+    schema: PostCountSchema,
+    tag: "list",
+  });
+
+  return count;
+}
+
+export async function getPostsSlugs(): Promise<Array<string>> {
+  const { slugs } = await fetchCMS({
+    uri: "blog/slugs",
+    method: "GET",
+    schema: PostSlugsSchema,
+  });
+
+  return slugs;
 }
