@@ -21,10 +21,10 @@ export default function Hero({ post }: Props) {
       <img
         src={imageUrl}
         alt={post.cover.alternativeText ?? "post"}
-        className="object-cover rounded-lg w-full h-full md:w-1/2 lg:w-1/3 group-hover:opacity-90 transition-all duration-300"
+        className="object-cover rounded-lg w-full h-auto md:w-1/2 lg:w-1/3 group-hover:opacity-90 transition-all duration-300"
       />
 
-      <div className="space-y-2 grid grid-rows-[1fr_1fr_auto_1fr] overflow-hidden">
+      <div className="space-y-2 grid grid-rows-[1fr_1fr_auto_1fr] overflow-hidden w-full">
         <h2 className="text-gray-400 font-light">
           {new Date(post.date).toLocaleDateString("pt-BR", {
             dateStyle: "long",
