@@ -52,8 +52,6 @@ export default async function Page(props: Props) {
 
   const avatar = post.author.photo?.formats?.small?.url ?? post.author.photo?.url ?? null;
 
-  console.log(post.author);
-
   return (
     <main className="container max-w-screen-xl mx-auto p-4">
       <h1 className="text-6xl font-bold mb-4">{post.title}</h1>

@@ -26,8 +26,6 @@ export async function fetchCMS<T extends z.Schema>(props: Props<T>): Promise<z.i
 
     const decodedURI = decodeURIComponent(URI.toString());
 
-    console.log(decodedURI);
-
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${CMS_API_TOKEN}`);
 
