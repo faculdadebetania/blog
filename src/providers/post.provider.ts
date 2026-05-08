@@ -27,8 +27,7 @@ export async function getPosts(props?: Props): Promise<Posts> {
     "pagination[start]": ((+page - 1) * 10).toString(),
     "pagination[limit]": pageSize.toString(),
     "populate[cover]": "*",
-    "populate[author][fields][0]": "name",
-    "populate[author][populate][photo]": "*",
+    "populate[author]": "*",
     sort: sort,
   };
 
