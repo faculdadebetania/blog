@@ -74,6 +74,20 @@ export async function fetchCMS<T extends z.Schema>(
       );
     }
 
+    if (!response.ok) {
+      const text = await response.text();
+
+      console.error({
+        status: response.status,
+        url: URI.toString(),
+        response: text,
+      });
+
+      throw new Error(
+        `CMS request failed: ${response.status}`
+      );
+    }
+
     const body = await response.json();
 
     const parsed = CMS_SCHEMA.parse(body);
