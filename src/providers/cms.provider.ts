@@ -64,7 +64,7 @@ export async function fetchCMS<T extends z.Schema>(
     }
 
     const response = await fetch(
-      decodeURIComponent(URI.toString()),
+      URI.toString(),
       requestInit
     );
 
