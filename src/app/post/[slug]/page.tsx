@@ -12,6 +12,9 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { getPost, getPostsSlugs, getRandomPosts } from "src/providers/post.provider";
 
+export const revalidate = 3600
+export const dynamicParams = true
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
