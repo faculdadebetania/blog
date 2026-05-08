@@ -32,7 +32,7 @@ export async function fetchCMS<T extends z.Schema>(props: Props<T>): Promise<z.i
     const nextFetchRequestConfig: NextFetchRequestConfig = {};
     if (tag) nextFetchRequestConfig.tags = [tag];
 
-    const requestInit: RequestInit = { method, headers, cache: "force-cache", next: nextFetchRequestConfig };
+    const requestInit: RequestInit = { method, headers, cache: "no-store", next: nextFetchRequestConfig };
 
     if (params && method === "POST") requestInit.body = JSON.stringify(params);
 
