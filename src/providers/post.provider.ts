@@ -26,9 +26,10 @@ export async function getPosts(props?: Props): Promise<Posts> {
   const params: Record<string, string> = {
     "pagination[start]": ((+page - 1) * 10).toString(),
     "pagination[limit]": pageSize.toString(),
-    "populate[cover]": "*",
-    "populate[author]": "*",
-    sort: sort,
+    "populate[0]": "cover",
+    "populate[1]": "author",
+    "populate[2]": "author.photo",
+    "sort[0]": "date:desc",
   };
 
   if (filter) params[`filters[${filter.field}][${filter.operator}]`] = filter.value;
